@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:sharedUserId="android.uid.system" >
+
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
+    <uses-permission android:name="android.permission.SET_KEYBOARD_LAYOUT" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher_settings"
+        android:label="@string/schedule_power_on_off_title"
+        android:roundIcon="@mipmap/ic_launcher_settings"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SchedulePowerOnOff2"
+        android:uiOptions="splitActionBarWhenNarrow"
+        tools:targetApi="31" >
+    <activity
+        android:name="com.borqs.schedulepoweronoff.TimeSetActivity"
+        android:clearTaskOnLaunch="true"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="@string/schedule_power_on_off_set"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+    </activity>
+
+    <receiver android:name="com.borqs.schedulepoweronoff.PowerOnReceiver"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="com.borqs.action.schedule.poweron" />
+        </intent-filter>
+    </receiver>
+    <receiver android:name="com.borqs.schedulepoweronoff.PowerOffReceiver"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="com.borqs.action.schedule.poweroff" />
+        </intent-filter>
+    </receiver>
+    <receiver android:name="com.borqs.schedulepoweronoff.AlarmInitReceiver"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+        </intent-filter>
+    </receiver>
+
+    <service
+        android:name="com.borqs.schedulepoweronoff.TimeChangedService"
+        android:exported="false" />
+
+    <activity
+        android:name="com.borqs.schedulepoweronoff.ShutdownActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:excludeFromRecents="true"
+        android:theme="@android:style/Theme.Holo.NoActionBar"
+        android:exported="true">
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+    </activity>
+</application>
+</manifest>
